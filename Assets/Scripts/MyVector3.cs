@@ -34,7 +34,7 @@ public class MyVector3
 
     public static MyVector3 SubtractVector(MyVector3 a, MyVector3 b)
     {
-        //Initialize our return valure (rv)
+        //Initialize our return value (rv)
         MyVector3 rv = new MyVector3(0, 0, 0);
 
         //Subtract our two vectors
@@ -55,9 +55,9 @@ public class MyVector3
     {
         MyVector3 rv = new MyVector3(0, 0, 0);
 
-        rv.x = rv.x * scalar;
-        rv.y = rv.y * scalar;
-        rv.z = rv.z * scalar;
+        rv.x = a.x * scalar;
+        rv.y = a.y * scalar;
+        rv.z = a.z * scalar;
 
         return rv;
     }
@@ -71,9 +71,9 @@ public class MyVector3
     {
         MyVector3 rv = new MyVector3(0, 0, 0);
 
-        rv.x = rv.x * divisor;
-        rv.y = rv.y * divisor;
-        rv.z = rv.z * divisor;
+        rv.x = a.x / divisor;
+        rv.y = a.y / divisor;
+        rv.z = a.z / divisor;
 
         return rv;
     }
@@ -85,9 +85,9 @@ public class MyVector3
 
     public MyVector3 NormalizeVector()
     {
-        MyVector3 rv = new MyVector3(0, 0, 0);
+        MyVector3 rv;
 
-        rv = rv / rv.Length();
+        rv = this / Length();
 
         return rv;
     }
