@@ -87,11 +87,33 @@ public class MyVector3
     {
         MyVector3 rv = new MyVector3(0, 0, 0);
 
-        rv.x = x;
-        rv.y = y;
-        rv.z = z;
-
         rv = rv / rv.Length();
+
+        return rv;
+    }
+
+    public static float DotProductVector(MyVector3 a, MyVector3 b, bool shouldNormalize = true)
+    {
+        float rv;
+
+        MyVector3 A = new MyVector3(a.x, a.y, a.z);
+        MyVector3 B = new MyVector3(b.x, b.y, b.z);
+
+        //Normalize the vectors
+        if(shouldNormalize)
+        {
+            A = A.NormalizeVector();
+            B = B.NormalizeVector();
+
+            //Do the dot product using the formula
+            rv = A.x * B.x + A.y * B.y + A.z * B.z;
+        }
+        else
+        {
+            //Do the dot product using the formula
+            rv = A.x * B.x + A.y * B.y + A.z * B.z;
+        }
+
 
         return rv;
     }
