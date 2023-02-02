@@ -16,25 +16,25 @@ public class EvaderMovement : MonoBehaviour
     {
         //Gets the input of the player
         float inputX = Input.GetAxisRaw("Horizontal");
-        float inputY = Input.GetAxisRaw("Vertical");
+        float inputZ = Input.GetAxisRaw("Vertical");
 
         //Gets for the position of the sphere in game
         position = new MyVector3(transform.position.x, transform.position.y, transform.position.z);
 
         //Checks if theres input, if not it doesnt move
-        if(inputX != 0 || inputY != 0)
+        if(inputX != 0 || inputZ != 0)
         {
             //Gets the direction it should move
-            movement =  new MyVector3(inputX, inputY, 0);
+            movement =  new MyVector3(inputX, 0, inputZ);
 
             //Normalizes the direction of movement
             movNormalize = movement.NormalizeVector();
 
-            //Multiplies the direction with a speed variable to move at a certain speed
-            MyVector3 moveVelocity = MyVector3.ScaleVector(movement, moveSpeed);
+            //Multiplies the direction with a speed variable to move at a certain speed with the same speed per frame 
+            MyVector3 moveVelocity = MyVector3.ScaleVector(movNormalize, moveSpeed);
 
             //Updates the position of the sphere in a velocity
-            transform.position += moveVelocity.ToUnityVector() * Time.deltaTime;
+            transform.position += moveVelocity.ToUnityVector3() * Time.deltaTime;
         }
 
         Raycasting();
@@ -42,6 +42,6 @@ public class EvaderMovement : MonoBehaviour
 
     private void Raycasting()
     {
-        Debug.DrawRay(position.ToUnityVector(), movNormalize.ToUnityVector() * 2, Color.green);
+        Debug.DrawRay(position.ToUnityVector3(), movNormalize.ToUnityVector3() * 2, Color.green);
     }
 }

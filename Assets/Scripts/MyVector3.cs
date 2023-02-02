@@ -136,7 +136,7 @@ public class MyVector3
         return rv;
     }
 
-    public Vector3 ToUnityVector()
+    public Vector3 ToUnityVector3()
     {
         Vector3 rv = new Vector3(x, y, z);
 

@@ -22,10 +22,8 @@ public class FindObject : MonoBehaviour
         finalPos = new MyVector3(sphere.transform.position.x, sphere.transform.position.y, sphere.transform.position.z);
 
         
-
-
         //Check if the objects are not in the same place
-        if (transform.position != finalPos.ToUnityVector())
+        if (transform.position != finalPos.ToUnityVector3())
         {
             //Gets the direction it should move
             MyVector3 direction = MyVector3.SubtractVector(finalPos, oldPos);
@@ -43,9 +41,9 @@ public class FindObject : MonoBehaviour
             float dotProductVectors = MyVector3.DotProductVector(direction, evaderMovement_script.movement, false);
 
             //Checks that the cube is behind the sphere and if its close enough in order to move towards it
-            if(dotProductVectors >= 0.5 && distance < 15)
+            if(dotProductVectors >= 0 && distance < 15)
             {
-                transform.position += moveVelocity.ToUnityVector() * Time.fixedDeltaTime;
+                transform.position += moveVelocity.ToUnityVector3() * Time.fixedDeltaTime;
             }
         }
         
@@ -54,7 +52,7 @@ public class FindObject : MonoBehaviour
 
     private void Raycasting()
     {
-        Debug.DrawRay(oldPos.ToUnityVector(), MyVector3.SubtractVector(finalPos, oldPos).ToUnityVector(), Color.red);
+        Debug.DrawRay(oldPos.ToUnityVector3(), MyVector3.SubtractVector(finalPos, oldPos).ToUnityVector3(), Color.red);
     }
 
 }
