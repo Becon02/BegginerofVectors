@@ -4,29 +4,24 @@ using UnityEngine;
 
 public class MathFunctions
 {
-    public static float VectorToRadians(MyVector2 V2)
-    {
-        float rv = 0.0f;
-
-        rv = Mathf.Atan2(V2.y, V2.x);
-
-        return rv;
-    }
-
-    public static MyVector2 RadiansToVector(float angleRad)
-    {
-        MyVector2 rv = new MyVector2(Mathf.Cos(angleRad), Mathf.Sin(angleRad));
-
-        return rv;
-    }
-
-    public static MyVector3 EulerAnglesToVector(MyVector3 eulerAngles)
+    public static MyVector3 EulerAnglesToDirection(MyVector3 eulerAngles)
     {
         MyVector3 rv = new MyVector3(0, 0, 0);
 
-        rv.x = Mathf.Cos(eulerAngles.y) * Mathf.Cos(eulerAngles.x);
-        rv.y = Mathf.Cos(eulerAngles.x) * Mathf.Sin(eulerAngles.y);
-        rv.z = Mathf.Sin(eulerAngles.x);
+        rv.x = Mathf.Cos(eulerAngles.x) * Mathf.Sin(eulerAngles.y);
+        rv.y = -Mathf.Sin(eulerAngles.x);
+        rv.z = Mathf.Cos(eulerAngles.y) * Mathf.Cos(eulerAngles.x);
+
+        return rv;
+    }
+
+    public static MyVector3 DegreesToRadiansVector(MyVector3 degreesVector)
+    {
+        MyVector3 rv = new MyVector3(0, 0, 0);
+
+        rv.x = (degreesVector.x * Mathf.PI) / 180;
+        rv.y = (degreesVector.y * Mathf.PI) / 180;
+        rv.z = (degreesVector.z * Mathf.PI) / 180;
 
         return rv;
     }
@@ -38,6 +33,93 @@ public class MathFunctions
         rv.x = a.y * b.z - a.z * b.y;
         rv.y = a.x * b.z - a.z * b.x;
         rv.z = a.x * b.y - a.y * b.x;
+
+        return rv;
+    }
+
+    public static MyVector3 VectorLerp(MyVector3 A, MyVector3 B, float T)
+    {
+        //Clamps the fractional value so its always between 0 and 1
+        T = Mathf.Clamp(T, 0, 1);
+
+        return A * (1 - T) + B * T; 
+    }
+}
+
+public class Matrix4by4
+{
+    //Public multidimensional array 2*2 to store matrix values
+    public float[,] values;
+
+    //Public constructor that takes MyVector4 arguments to create a 4by4 matrix
+    public Matrix4by4(MyVector4 column1, MyVector4 column2, MyVector4 column3, MyVector4 column4)
+    {
+        values = new float[4, 4];
+
+        //Column 1
+        values[0, 0] = column1.x;
+        values[1, 0] = column1.y;
+        values[2, 0] = column1.z;
+        values[3, 0] = column1.w;
+
+        //Column 2
+        values[0, 1] = column2.x;
+        values[1, 1] = column2.y;
+        values[2, 1] = column2.z;
+        values[3, 1] = column2.w;
+
+        //Column 3
+        values[0, 2] = column3.x;
+        values[1, 2] = column3.y;
+        values[2, 2] = column3.z;
+        values[3, 2] = column3.w;
+
+        //Column 4
+        values[0, 3] = column4.x;
+        values[1, 3] = column4.y;
+        values[2, 3] = column4.z;
+        values[3, 3] = column4.w;
+    }
+
+    //Public constructor that takes MyVector3 arguments to create a 4by4 matrix
+    public Matrix4by4(MyVector3 column1, MyVector3 column2, MyVector3 column3, MyVector3 column4)
+    {
+        values = new float[4, 4];
+
+        //Column 1
+        values[0, 0] = column1.x;
+        values[1, 0] = column1.y;
+        values[2, 0] = column1.z;
+        values[3, 0] = 0;
+
+        //Column 2
+        values[0, 1] = column2.x;
+        values[1, 1] = column2.y;
+        values[2, 1] = column2.z;
+        values[3, 1] = 0;
+
+        //Column 3
+        values[0, 2] = column3.x;
+        values[1, 2] = column3.y;
+        values[2, 2] = column3.z;
+        values[3, 2] = 0;
+
+        //Column 4
+        values[0, 3] = column4.x;
+        values[1, 3] = column4.y;
+        values[2, 3] = column4.z;
+        values[3, 3] = 1;
+    }
+
+    //Operator overload that multiplies a matrix4by4 by a MyVector4
+    public static MyVector4 operator *(Matrix4by4 lhs, MyVector4 rhs)
+    {
+        MyVector4 rv = new MyVector4(0, 0, 0, 0);
+
+        rv.x = lhs.values[0, 0] * rhs.x + lhs.values[0, 1] * rhs.y + lhs.values[0, 2] * rhs.z + lhs.values[0, 3] * rhs.w;
+        rv.y = lhs.values[1, 0] * rhs.x + lhs.values[1, 1] * rhs.y + lhs.values[1, 2] * rhs.z + lhs.values[1, 3] * rhs.w;
+        rv.z = lhs.values[2, 0] * rhs.x + lhs.values[2, 1] * rhs.y + lhs.values[2, 2] * rhs.z + lhs.values[2, 3] * rhs.w;
+        rv.w = lhs.values[3, 0] * rhs.x + lhs.values[3, 1] * rhs.y + lhs.values[3, 2] * rhs.z + lhs.values[3, 3] * rhs.w;
 
         return rv;
     }

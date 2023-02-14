@@ -45,7 +45,10 @@ public class FindObject : MonoBehaviour
             {
                 transform.position += moveVelocity.ToUnityVector3() * Time.fixedDeltaTime;
             }
+            
         }
+        //Makes the cube always look at its target
+        transform.LookAt(finalPos.ToUnityVector3());    
         
         Raycasting();
     }

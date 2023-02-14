@@ -118,6 +118,13 @@ public class MyVector3
         return rv;
     }
 
+    public static MyVector3 ToMyVector3(Vector3 vector3)
+    {
+        MyVector3 rv = new MyVector3(vector3.x, vector3.y, vector3.z);
+
+        return rv;
+    }
+
     public float Length()
     {
         float rv = 0.0f;

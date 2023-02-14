@@ -12,6 +12,13 @@ public class MyVector2
         this.y = y;
     }
 
+    public static MyVector2 ToMyVector2(Vector2 vector2)
+    {
+        MyVector2 rv = new MyVector2(vector2.x, vector2.y);
+
+        return rv;
+    }
+
     public Vector2 ToUnityVector2()
     {
         Vector2 rv = new Vector2(x, y);
