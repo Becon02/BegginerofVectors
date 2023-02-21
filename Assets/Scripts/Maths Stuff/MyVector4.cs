@@ -27,4 +27,7 @@ public class MyVector4
 
         return rv;
     }
+
+    public static implicit operator MyVector4(MyVector3 vector3) => new MyVector4(vector3.x, vector3.y, vector3.z, 1);
+
 }

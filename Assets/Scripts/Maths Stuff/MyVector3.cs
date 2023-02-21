@@ -125,6 +125,32 @@ public class MyVector3
         return rv;
     }
 
+    public static implicit operator MyVector3(MyVector4 vector4) => new MyVector3(vector4.x, vector4.y, vector4.z);
+
+    public static MyVector3[] Vector3ArrayToMyVector3Array(Vector3[] vector3Array)
+    {
+        MyVector3[] rv = new MyVector3[vector3Array.Length];
+
+        for (int i = 0; i < vector3Array.Length; i++)
+        {
+            rv[i] = ToMyVector3(vector3Array[i]);
+        }
+
+        return rv;
+    }
+
+    public static Vector3[] MyVector3ArrayToVector3Array(MyVector3[] myVector3Array)
+    {
+        Vector3[] rv = new Vector3[myVector3Array.Length];
+
+        for (int i = 0; i < myVector3Array.Length; i++)
+        {
+            rv[i] = myVector3Array[i].ToUnityVector3();
+        }
+
+        return rv;
+    }
+
     public float Length()
     {
         float rv = 0.0f;
