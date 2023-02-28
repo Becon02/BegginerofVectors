@@ -1890,7 +1890,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1454250236
 Transform:
   m_ObjectHideFlags: 0
@@ -2726,7 +2726,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0751091d04e6f64e8a6d5466fc22a81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  segments: 20
+  segments: 50
   xradius: 15
   zradius: 15
 --- !u!114 &1875629011
@@ -2795,7 +2795,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1
+        value: 0.39655876
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -3004,7 +3004,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2002298293
 Transform:
   m_ObjectHideFlags: 0
