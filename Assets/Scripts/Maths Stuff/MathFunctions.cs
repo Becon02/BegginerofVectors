@@ -44,6 +44,15 @@ public class MathFunctions
 
         return A * (1 - T) + B * T; 
     }
+
+    public static MyVector3 RotatedVertex(float angle, MyVector3 Axis, MyVector3 Vertex)
+    {
+        MyVector3 rv = (Vertex * Mathf.Cos(angle)) +
+            (Axis * MyVector3.DotProductVector(Vertex, Axis) * (1.0f - Mathf.Cos(angle))) +
+            (CrossProduct(Axis, Vertex) * Mathf.Sin(angle));
+
+        return rv;
+    }
 }
 
 public class Matrix4by4
@@ -162,6 +171,54 @@ public class Matrix4by4
         rv.values[3, 1] = lhs.values[3, 0] * rhs.values[0, 1] + lhs.values[3, 1] * rhs.values[1, 1] + lhs.values[3, 2] * rhs.values[2, 1] + lhs.values[3, 3] * rhs.values[3, 1];
         rv.values[3, 2] = lhs.values[3, 0] * rhs.values[0, 2] + lhs.values[3, 1] * rhs.values[1, 2] + lhs.values[3, 2] * rhs.values[2, 2] + lhs.values[3, 3] * rhs.values[3, 2];
         rv.values[3, 3] = lhs.values[3, 0] * rhs.values[0, 3] + lhs.values[3, 1] * rhs.values[1, 3] + lhs.values[3, 2] * rhs.values[2, 3] + lhs.values[3, 3] * rhs.values[3, 3];
+
+        return rv;
+    }
+}
+
+public class Quat
+{
+    public float w;
+    public MyVector3 v;
+
+    public Quat()
+    {
+        w = 0.0f;
+        v = new MyVector3(0, 0, 0);
+    }
+
+    public Quat(float angle, MyVector3 Axis)
+    {
+        float halfAngle = angle / 2;
+        w = Mathf.Cos(halfAngle);
+
+        v = Axis * Mathf.Sin(halfAngle);
+    }
+
+    public Quat(MyVector3 Position)
+    {
+        w = 0.0f;
+        v = new MyVector3(Position.x, Position.y, Position.z);
+    }
+
+    public static Quat operator * (Quat lhs, Quat rhs)
+    {
+        Quat rv = new Quat();
+
+        rv.w = lhs.w * rhs.w - MyVector3.DotProductVector(lhs.v, rhs.v);
+
+        rv.v = rhs.v * lhs.w + lhs.v * rhs.w + MathFunctions.CrossProduct(rhs.v, lhs.v);
+
+        return rv;
+    }
+
+    public Quat Inverse()
+    {
+        Quat rv = new Quat();
+
+        rv.w = w;
+
+        
 
         return rv;
     }
