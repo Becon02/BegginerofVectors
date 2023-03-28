@@ -187,7 +187,7 @@ public class Quat
         v = new MyVector3(0, 0, 0);
     }
 
-    public Quat(float angle, MyVector3 Axis)
+    public Quat (float angle, MyVector3 Axis)
     {
         float halfAngle = angle / 2;
         w = Mathf.Cos(halfAngle);
@@ -212,14 +212,61 @@ public class Quat
         return rv;
     }
 
+    public Quat SetAxis(Vector3 Axis)
+    {
+        Quat rv;
+
+        float w = 0.0f;
+
+        rv = new Quat(w, MyVector3.ToMyVector3(Axis));
+
+        return rv;
+    }
+
+    public Vector3 GetAxis()
+    {
+        Vector3 rv;
+
+        rv = new Vector3(v.x, v.y, v.z);
+
+        return rv;
+    }
+
     public Quat Inverse()
     {
         Quat rv = new Quat();
 
         rv.w = w;
 
-        
+        rv.SetAxis(-GetAxis());
 
         return rv;
+    }
+
+    public MyVector4 GetAxisAngle()
+    {
+        MyVector4 rv = new MyVector4(0, 0, 0, 0);
+
+        float halfAngle = Mathf.Acos(w);
+        rv.w = halfAngle * 2;
+
+        rv.x = v.x / Mathf.Sin(halfAngle);
+        rv.y = v.y / Mathf.Sin(halfAngle);
+        rv.z = v.z / Mathf.Sin(halfAngle);
+
+        return rv;
+    }
+
+    public static Quat Slerp(Quat q, Quat r, float t)
+    {
+        t = Mathf.Clamp(t, 0.0f, 1.0f);
+
+        Quat d = r * q.Inverse();
+
+        MyVector4 AxisAngle = d.GetAxisAngle();
+
+        Quat dT = new Quat(AxisAngle.w * t, new MyVector3(AxisAngle.x, AxisAngle.y, AxisAngle.z));
+
+        return dT * q;
     }
 }
